@@ -49,6 +49,8 @@ import AdminEconomyControl from '@/pages/admin/AdminEconomyControl';
 import AdminUserManager from '@/pages/admin/AdminUserManager';
 import AdminLockdownControl from '@/pages/admin/AdminLockdownControl';
 import AdminKycReview from '@/pages/admin/AdminKycReview';
+import AdminApiManager from '@/pages/admin/AdminApiManager';
+import AdminTransactionLedger from '@/pages/admin/AdminTransactionLedger';
 
 export interface RouteConfig {
   name: string;
@@ -114,6 +116,8 @@ const routes: RouteConfig[] = [
   { name: 'Admin User Manager', path: '/admin/users', element: <AdminUserManager />, public: true },
   { name: 'Admin Lockdown', path: '/admin/lockdown', element: <AdminLockdownControl />, public: true },
   { name: 'Admin KYC Review', path: '/admin/kyc', element: <AdminKycReview />, public: true },
+  { name: 'Admin API Manager', path: '/admin/api-manager', element: <AdminApiManager />, public: true },
+  { name: 'Admin Transaction Ledger', path: '/admin/ledger', element: <AdminTransactionLedger />, public: true },
 
   // ── Phase 3 Admin ──────────────────────────────────────────────────────────
   { name: 'RX Kernel Control Center', path: '/rx-kernel', element: <RxKernelPage />, public: true },
