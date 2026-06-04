@@ -1,0 +1,259 @@
+/* stylelint-disable */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* RACE-X Design System - Carbon Fiber + 3D Neon Blue Glassmorphism
+   Primary: Neon Blue #00F2FF
+   Secondary: Neon Purple #BC13FE
+   Accent: Neon Green #00FF88
+   All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+    /* Carbon Fiber Dark Background */
+    --background: 0 0% 8%;
+    --foreground: 0 0% 98%;
+    /* Glassmorphism Cards */
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 98%;
+    /* Neon Blue Primary #00F2FF */
+    --primary: 187 100% 50%;
+    --primary-foreground: 0 0% 10%;
+    --primary-glow: 187 100% 65%;
+    /* Neon Purple Secondary #BC13FE */
+    --secondary: 283 99% 54%;
+    --secondary-foreground: 0 0% 98%;
+    --secondary-glow: 283 99% 70%;
+    /* Neon Green Accent #00FF88 */
+    --accent: 160 100% 50%;
+    --accent-foreground: 0 0% 10%;
+    --accent-glow: 160 100% 65%;
+    /* Muted/Neutral */
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 65%;
+    /* Destructive */
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 0 0% 98%;
+    /* Borders and Inputs */
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+    --ring: 187 100% 50%;
+    /* Charts */
+    --chart-1: 187 100% 50%;
+    --chart-2: 283 99% 54%;
+    --chart-3: 160 100% 50%;
+    --chart-4: 45 100% 55%;
+    --chart-5: 330 85% 60%;
+    /* Sidebar */
+    --sidebar-background: 0 0% 10%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 187 100% 50%;
+    --sidebar-primary-foreground: 0 0% 10%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 187 100% 50%;
+    
+    /* Dynamic App Background */
+    --app-background-color: #000000;
+  }
+
+  .dark {
+    /* Always-on dark mode - same as root */
+    --background: 0 0% 8%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 187 100% 50%;
+    --primary-foreground: 0 0% 10%;
+    --primary-glow: 187 100% 65%;
+    --secondary: 283 99% 54%;
+    --secondary-foreground: 0 0% 98%;
+    --secondary-glow: 283 99% 70%;
+    --accent: 160 100% 50%;
+    --accent-foreground: 0 0% 10%;
+    --accent-glow: 160 100% 65%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 65%;
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+    --ring: 187 100% 50%;
+    --chart-1: 187 100% 50%;
+    --chart-2: 283 99% 54%;
+    --chart-3: 160 100% 50%;
+    --chart-4: 45 100% 55%;
+    --chart-5: 330 85% 60%;
+    --sidebar-background: 0 0% 10%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 187 100% 50%;
+    --sidebar-primary-foreground: 0 0% 10%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 187 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background-image: 
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.3) 2px,
+        rgba(0, 0, 0, 0.3) 4px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.3) 2px,
+        rgba(0, 0, 0, 0.3) 4px
+      );
+    background-size: 20px 20px;
+    background-color: hsl(var(--background));
+  }
+}
+
+@layer utilities {
+  /* Glassmorphism Effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  /* Neon Glow Effects */
+  .glow-blue {
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.5),
+                0 0 40px rgba(0, 242, 255, 0.3),
+                0 0 60px rgba(0, 242, 255, 0.2);
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 20px rgba(188, 19, 254, 0.5),
+                0 0 40px rgba(188, 19, 254, 0.3),
+                0 0 60px rgba(188, 19, 254, 0.2);
+  }
+
+  .glow-green {
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5),
+                0 0 40px rgba(0, 255, 136, 0.3),
+                0 0 60px rgba(0, 255, 136, 0.2);
+  }
+
+  .glow-red {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.5),
+                0 0 40px rgba(239, 68, 68, 0.3),
+                0 0 60px rgba(239, 68, 68, 0.2);
+  }
+
+  .glow-blue-text {
+    text-shadow: 0 0 10px rgba(0, 242, 255, 0.8),
+                 0 0 20px rgba(0, 242, 255, 0.6),
+                 0 0 30px rgba(0, 242, 255, 0.4);
+  }
+
+  .glow-purple-text {
+    text-shadow: 0 0 10px rgba(188, 19, 254, 0.8),
+                 0 0 20px rgba(188, 19, 254, 0.6),
+                 0 0 30px rgba(188, 19, 254, 0.4);
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .gradient-text-accent {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Gradient Backgrounds */
+  .gradient-blue-purple {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+  }
+
+  .gradient-blue-green {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+  }
+
+  /* Pill Button */
+  .pill-button {
+    @apply rounded-full px-6 py-3 font-semibold transition-all duration-300;
+    @apply border-2 border-primary bg-primary/10 text-primary;
+    @apply hover:bg-primary hover:text-primary-foreground;
+    @apply glow-blue;
+  }
+
+  .pill-button-purple {
+    @apply rounded-full px-6 py-3 font-semibold transition-all duration-300;
+    @apply border-2 border-secondary bg-secondary/10 text-secondary;
+    @apply hover:bg-secondary hover:text-secondary-foreground;
+    @apply glow-purple;
+  }
+
+  .pill-button-green {
+    @apply rounded-full px-6 py-3 font-semibold transition-all duration-300;
+    @apply border-2 border-accent bg-accent/10 text-accent;
+    @apply hover:bg-accent hover:text-accent-foreground;
+    @apply glow-green;
+  }
+
+  /* Locked Tool Effect */
+  .tool-locked {
+    @apply blur-sm opacity-50 pointer-events-none;
+  }
+
+  /* Carbon Fiber Pattern */
+  .carbon-fiber {
+    background-image: 
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.3) 2px,
+        rgba(0, 0, 0, 0.3) 4px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.3) 2px,
+        rgba(0, 0, 0, 0.3) 4px
+      );
+    background-size: 20px 20px;
+    background-color: var(--app-background-color);
+  }
+}
