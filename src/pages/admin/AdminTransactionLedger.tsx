@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, RefreshCw, Download, Search, Filter, TrendingUp, TrendingDown, Diamond } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -116,6 +117,7 @@ export default function AdminTransactionLedger() {
     : txns;
 
   return (
+    <AdminAuthGuard>
     <div className="min-h-screen bg-[#0A0A0F] text-white">
       {/* Header */}
       <div className="sticky top-0 z-10 bg-[#0A0A0F]/95 backdrop-blur border-b border-[#00F2FF]/10 px-4 py-3">
@@ -211,6 +213,7 @@ export default function AdminTransactionLedger() {
               filtered.map(t => {
                 const delta = (t.diamond_balance_after ?? 0) - (t.diamond_balance_before ?? 0);
                 return (
+
                   <tr key={t.id} className="hover:bg-white/3 transition-colors">
                     <td className="px-3 py-2.5 whitespace-nowrap font-medium text-white">@{t.username ?? t.user_id.slice(0, 8)}</td>
                     <td className="px-3 py-2.5 whitespace-nowrap text-white/70 max-w-[140px] truncate">{t.action_type}</td>
@@ -252,5 +255,6 @@ export default function AdminTransactionLedger() {
         </div>
       )}
     </div>
+    </AdminAuthGuard>
   );
 }

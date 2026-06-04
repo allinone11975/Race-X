@@ -51,6 +51,9 @@ import AdminLockdownControl from '@/pages/admin/AdminLockdownControl';
 import AdminKycReview from '@/pages/admin/AdminKycReview';
 import AdminApiManager from '@/pages/admin/AdminApiManager';
 import AdminTransactionLedger from '@/pages/admin/AdminTransactionLedger';
+import AdminFeatureManager from '@/pages/admin/AdminFeatureManager';
+import AdminPricingControl from '@/pages/admin/AdminPricingControl';
+import AdminSystemOverrides from '@/pages/admin/AdminSystemOverrides';
 
 export interface RouteConfig {
   name: string;
@@ -118,6 +121,9 @@ const routes: RouteConfig[] = [
   { name: 'Admin KYC Review', path: '/admin/kyc', element: <AdminKycReview />, public: true },
   { name: 'Admin API Manager', path: '/admin/api-manager', element: <AdminApiManager />, public: true },
   { name: 'Admin Transaction Ledger', path: '/admin/ledger', element: <AdminTransactionLedger />, public: true },
+  { name: 'Admin Feature Manager', path: '/admin/features', element: <AdminFeatureManager />, public: true },
+  { name: 'Admin Pricing Control', path: '/admin/pricing', element: <AdminPricingControl />, public: true },
+  { name: 'Admin System Overrides', path: '/admin/overrides', element: <AdminSystemOverrides />, public: true },
 
   // ── Phase 3 Admin ──────────────────────────────────────────────────────────
   { name: 'RX Kernel Control Center', path: '/rx-kernel', element: <RxKernelPage />, public: true },

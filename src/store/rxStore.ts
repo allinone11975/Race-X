@@ -46,6 +46,10 @@ interface RxStore {
   unreadNotifications: number;
   setUnreadNotifications: (n: number) => void;
   incrementUnread: () => void;
+
+  // Omniverse UI preference
+  omniverseView: 'floating' | 'card';
+  setOmniverseView: (v: 'floating' | 'card') => void;
 }
 
 export const useRxStore = create<RxStore>()(
@@ -76,6 +80,9 @@ export const useRxStore = create<RxStore>()(
       unreadNotifications: 0,
       setUnreadNotifications: (n) => set({ unreadNotifications: n }),
       incrementUnread: () => set((s) => ({ unreadNotifications: s.unreadNotifications + 1 })),
+
+      omniverseView: 'floating',
+      setOmniverseView: (v) => set({ omniverseView: v }),
     }),
     {
       name: 'race-x-store',
@@ -83,6 +90,7 @@ export const useRxStore = create<RxStore>()(
         user: s.user,
         festivalTheme: s.festivalTheme,
         ambientAudioEnabled: s.ambientAudioEnabled,
+        omniverseView: s.omniverseView,
       }),
     }
   )

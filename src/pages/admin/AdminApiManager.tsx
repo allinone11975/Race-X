@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Plus, Trash2, TestTube2, ToggleLeft, ToggleRight, RefreshCw, Save, Loader2, CheckCircle, XCircle, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -145,6 +146,7 @@ export default function AdminApiManager() {
   });
 
   return (
+    <AdminAuthGuard>
     <div className="min-h-screen bg-[#0A0A0F] text-white">
       {/* Header */}
       <div className="sticky top-0 z-10 bg-[#0A0A0F]/95 backdrop-blur border-b border-[#00F2FF]/10 px-4 py-3">
@@ -295,5 +297,6 @@ export default function AdminApiManager() {
         </DialogContent>
       </Dialog>
     </div>
+    </AdminAuthGuard>
   );
 }

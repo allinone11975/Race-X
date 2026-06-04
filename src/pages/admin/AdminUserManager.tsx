@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ArrowLeft, Search, ShieldCheck, ShieldX, Diamond, Eye, User, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -51,6 +52,7 @@ export default function AdminUserManager() {
   };
 
   return (
+    <AdminAuthGuard>
     <div className="min-h-screen bg-[#0A0A0F] text-white">
       <div className="sticky top-0 z-10 bg-[#0A0A0F]/95 backdrop-blur border-b border-[#00F2FF]/10 px-4 py-3 flex items-center gap-3">
         <button onClick={() => navigate('/admin')} className="p-2 rounded-lg border border-white/10"><ArrowLeft className="w-4 h-4" /></button>
@@ -142,5 +144,6 @@ export default function AdminUserManager() {
         </DialogContent>
       </Dialog>
     </div>
+    </AdminAuthGuard>
   );
 }

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ArrowLeft, Lock, Unlock, AlertTriangle, ShieldAlert } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
@@ -45,6 +46,7 @@ export default function AdminLockdownControl() {
   };
 
   return (
+    <AdminAuthGuard>
     <div className="min-h-screen bg-[#0A0A0F] text-white">
       <div className="sticky top-0 z-10 bg-[#0A0A0F]/95 backdrop-blur border-b border-red-500/20 px-4 py-3 flex items-center gap-3">
         <button onClick={() => navigate('/admin')} className="p-2 rounded-lg border border-white/10"><ArrowLeft className="w-4 h-4" /></button>
@@ -97,5 +99,6 @@ export default function AdminLockdownControl() {
         </Button>
       </div>
     </div>
+    </AdminAuthGuard>
   );
 }

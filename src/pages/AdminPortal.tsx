@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Save, RotateCcw, Search, Terminal, Database, Code, RefreshCw, FolderOpen, File, Users, ShieldCheck, Diamond, Zap, Settings2, BookOpen, Lock, Receipt, Cpu } from 'lucide-react';
+import { ArrowLeft, Save, RotateCcw, Search, Terminal, Database, Code, RefreshCw, FolderOpen, File, Users, ShieldCheck, Diamond, Zap, Settings2, BookOpen, Lock, Receipt, Cpu, Power, Tag, Activity } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/db/supabase';
 import RxBadge from '@/components/common/RxBadge';
@@ -168,6 +169,7 @@ export default function AdminPortal() {
   }, {} as Record<string, CodeFile[]>);
 
   return (
+    <AdminAuthGuard>
     <div className="min-h-screen bg-[#0A0A0F] text-white flex flex-col">
       {/* Header */}
       <div className="sticky top-0 z-20 bg-[#0A0A0F]/95 backdrop-blur border-b border-[#BC13FE]/20 px-4 py-3 flex items-center justify-between">
@@ -268,6 +270,18 @@ export default function AdminPortal() {
                     {
                       icon: Receipt,      label: 'Transaction Ledger',   desc: 'Full ledger · filters · CSV export',
                       path: '/admin/ledger',  color: '#00F2FF',  badge: 'New',
+                    },
+                    {
+                      icon: Power,        label: 'Feature Manager',      desc: 'Master toggles · ON/OFF every module',
+                      path: '/admin/features', color: '#BC13FE', badge: 'God Mode',
+                    },
+                    {
+                      icon: Tag,          label: 'Pricing Control',      desc: 'Free/Premium switch · diamond cost editor',
+                      path: '/admin/pricing', color: '#FFD700', badge: 'God Mode',
+                    },
+                    {
+                      icon: Activity,     label: 'System Overrides',     desc: 'Blacklist providers · override LB · logs',
+                      path: '/admin/overrides', color: '#FF4444', badge: 'Critical',
                     },
                     {
                       icon: BookOpen,     label: 'Creator Leaderboard',  desc: 'Top creators by RX points & diamonds',
@@ -471,5 +485,6 @@ export default function AdminPortal() {
         </Tabs>
       </div>
     </div>
+    </AdminAuthGuard>
   );
 }

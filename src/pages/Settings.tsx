@@ -2,16 +2,18 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { ArrowLeft, Palette, RotateCcw, Save, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, Palette, RotateCcw, Save, ShieldCheck, Compass, LayoutDashboard } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/db/supabase';
 import { motion } from 'motion/react';
+import { useRxStore } from '@/store/rxStore';
 
 export default function Settings() {
   const navigate = useNavigate();
   const [bgColor, setBgColor] = useState('#000000');
   const [isLoading, setIsLoading] = useState(false);
-  
+  const { omniverseView, setOmniverseView } = useRxStore();
+
   const user = JSON.parse(localStorage.getItem('race-x-user') || '{}');
   const isAdmin = user.is_admin;
 
@@ -146,6 +148,38 @@ export default function Settings() {
               <span>Dark Mode</span>
               <div className="w-10 h-5 bg-primary rounded-full relative">
                 <div className="absolute right-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow" />
+              </div>
+            </div>
+
+            {/* Omniverse View Preference */}
+            <div className="p-3 rounded-lg hover:bg-muted/50 transition-colors">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <Compass className="w-4 h-4 text-[#BC13FE]" />
+                  <span>Omniverse Gateway Style</span>
+                </div>
+              </div>
+              <div className="flex gap-2 mt-2">
+                <button
+                  onClick={() => setOmniverseView('floating')}
+                  className={`flex-1 flex items-center justify-center gap-2 p-2 rounded-lg border text-xs font-semibold transition-all ${
+                    omniverseView === 'floating'
+                      ? 'border-[#BC13FE]/40 bg-[#BC13FE]/10 text-[#BC13FE]'
+                      : 'border-white/10 bg-white/5 text-white/50 hover:text-white/80'
+                  }`}
+                >
+                  <Compass className="w-3.5 h-3.5" /> Floating Button
+                </button>
+                <button
+                  onClick={() => setOmniverseView('card')}
+                  className={`flex-1 flex items-center justify-center gap-2 p-2 rounded-lg border text-xs font-semibold transition-all ${
+                    omniverseView === 'card'
+                      ? 'border-[#00F2FF]/40 bg-[#00F2FF]/10 text-[#00F2FF]'
+                      : 'border-white/10 bg-white/5 text-white/50 hover:text-white/80'
+                  }`}
+                >
+                  <LayoutDashboard className="w-3.5 h-3.5" /> Control Card
+                </button>
               </div>
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
