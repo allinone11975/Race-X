@@ -8,7 +8,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Save, RotateCcw, Search, Terminal, Database, Code, RefreshCw, FolderOpen, File, Users, ShieldCheck, Diamond, Zap, Settings2, BookOpen, Lock, Receipt, Cpu, Power, Tag, Activity } from 'lucide-react';
+import { ArrowLeft, Save, RotateCcw, Search, Terminal, Database, Code, RefreshCw, FolderOpen, File, Users, ShieldCheck, Diamond, Zap, Settings2, BookOpen, Lock, Receipt, Cpu, Power, Tag, Activity, LayoutDashboard, Bell, BarChart3, DollarSign, Shield, Package } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/db/supabase';
 import RxBadge from '@/components/common/RxBadge';
@@ -282,6 +282,34 @@ export default function AdminPortal() {
                     {
                       icon: Activity,     label: 'System Overrides',     desc: 'Blacklist providers · override LB · logs',
                       path: '/admin/overrides', color: '#FF4444', badge: 'Critical',
+                    },
+                    {
+                      icon: LayoutDashboard, label: 'Omniverse Command', desc: 'Master control center · kill-switch · modules',
+                      path: '/admin/omniverse', color: '#BC13FE', badge: 'Phase E',
+                    },
+                    {
+                      icon: BarChart3,     label: 'Analytics',            desc: 'Users · engagement · AI costs · retention',
+                      path: '/admin/analytics', color: '#BC13FE', badge: 'Insights',
+                    },
+                    {
+                      icon: Bell,         label: 'Notifications',         desc: 'Broadcast announcements · maintenance · promos',
+                      path: '/admin/notifications', color: '#FFD700', badge: 'Broadcast',
+                    },
+                    {
+                      icon: Activity,     label: 'Audit Log',             desc: 'All admin actions · provider changes · bans',
+                      path: '/admin/audit', color: '#00FF88', badge: 'Logs',
+                    },
+                    {
+                      icon: DollarSign,   label: 'Cost Budgets',          desc: 'Daily/weekly/monthly limits · zero-cost mode',
+                      path: '/admin/budgets', color: '#FF6B35', badge: 'Cost Guard',
+                    },
+                    {
+                      icon: Shield,       label: 'Fraud Protection',      desc: 'Bot detection · spam · abuse events',
+                      path: '/admin/fraud', color: '#FF4444', badge: 'Security',
+                    },
+                    {
+                      icon: Package,      label: 'App Distribution',      desc: 'PWA config · install links · deep links',
+                      path: '/admin/distribution', color: '#BC13FE', badge: 'PWA',
                     },
                     {
                       icon: BookOpen,     label: 'Creator Leaderboard',  desc: 'Top creators by RX points & diamonds',

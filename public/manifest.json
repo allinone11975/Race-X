@@ -1,0 +1,52 @@
+{
+  "name": "RACE-X Omniverse",
+  "short_name": "RACE-X",
+  "description": "AI-powered creative ecosystem — Studio, Music, Social, Shopping, Chat",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#BC13FE",
+  "background_color": "#0A0A0F",
+  "lang": "en",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["entertainment", "music", "social", "productivity"],
+  "shortcuts": [
+    {
+      "name": "RX Studio",
+      "short_name": "Studio",
+      "description": "AI creative studio",
+      "url": "/studio",
+      "icons": [{ "src": "/favicon.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "RX Music",
+      "short_name": "Music",
+      "description": "AI music generation",
+      "url": "/music",
+      "icons": [{ "src": "/favicon.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "RX Social",
+      "short_name": "Social",
+      "description": "Social feed",
+      "url": "/social",
+      "icons": [{ "src": "/favicon.png", "sizes": "96x96" }]
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}

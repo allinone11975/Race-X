@@ -54,6 +54,13 @@ import AdminTransactionLedger from '@/pages/admin/AdminTransactionLedger';
 import AdminFeatureManager from '@/pages/admin/AdminFeatureManager';
 import AdminPricingControl from '@/pages/admin/AdminPricingControl';
 import AdminSystemOverrides from '@/pages/admin/AdminSystemOverrides';
+import AdminOmniverse from '@/pages/admin/AdminOmniverse';
+import AdminAuditLog from '@/pages/admin/AdminAuditLog';
+import AdminNotifications from '@/pages/admin/AdminNotifications';
+import AdminAnalytics from '@/pages/admin/AdminAnalytics';
+import AdminBudgets from '@/pages/admin/AdminBudgets';
+import AdminFraud from '@/pages/admin/AdminFraud';
+import AdminAppDistribution from '@/pages/admin/AdminAppDistribution';
 
 export interface RouteConfig {
   name: string;
@@ -115,6 +122,7 @@ const routes: RouteConfig[] = [
 
   // ── Admin Portal ───────────────────────────────────────────────────────────
   { name: 'Admin Portal', path: '/admin', element: <AdminPortal />, public: true },
+  { name: 'Admin Omniverse Command', path: '/admin/omniverse', element: <AdminOmniverse />, public: true },
   { name: 'Admin Economy Control', path: '/admin/economy', element: <AdminEconomyControl />, public: true },
   { name: 'Admin User Manager', path: '/admin/users', element: <AdminUserManager />, public: true },
   { name: 'Admin Lockdown', path: '/admin/lockdown', element: <AdminLockdownControl />, public: true },
@@ -124,6 +132,12 @@ const routes: RouteConfig[] = [
   { name: 'Admin Feature Manager', path: '/admin/features', element: <AdminFeatureManager />, public: true },
   { name: 'Admin Pricing Control', path: '/admin/pricing', element: <AdminPricingControl />, public: true },
   { name: 'Admin System Overrides', path: '/admin/overrides', element: <AdminSystemOverrides />, public: true },
+  { name: 'Admin Audit Log', path: '/admin/audit', element: <AdminAuditLog />, public: true },
+  { name: 'Admin Notifications', path: '/admin/notifications', element: <AdminNotifications />, public: true },
+  { name: 'Admin Analytics', path: '/admin/analytics', element: <AdminAnalytics />, public: true },
+  { name: 'Admin Budgets', path: '/admin/budgets', element: <AdminBudgets />, public: true },
+  { name: 'Admin Fraud Protection', path: '/admin/fraud', element: <AdminFraud />, public: true },
+  { name: 'Admin App Distribution', path: '/admin/distribution', element: <AdminAppDistribution />, public: true },
 
   // ── Phase 3 Admin ──────────────────────────────────────────────────────────
   { name: 'RX Kernel Control Center', path: '/rx-kernel', element: <RxKernelPage />, public: true },
