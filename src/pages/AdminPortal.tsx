@@ -8,7 +8,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Save, RotateCcw, Search, Terminal, Database, Code, RefreshCw, FolderOpen, File, Users, ShieldCheck, Diamond, Zap, Settings2, BookOpen, Lock, Receipt, Cpu, Power, Tag, Activity, LayoutDashboard, Bell, BarChart3, DollarSign, Shield, Package } from 'lucide-react';
+import { ArrowLeft, Save, RotateCcw, Search, Terminal, Database, Code, RefreshCw, FolderOpen, File, Users, ShieldCheck, Diamond, Zap, Settings2, BookOpen, Lock, Receipt, Cpu, Power, Tag, Activity, LayoutDashboard, Bell, BarChart3, DollarSign, Shield, Package, HeartPulse, ListChecks, Boxes, Gem } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/db/supabase';
 import RxBadge from '@/components/common/RxBadge';
@@ -310,6 +310,22 @@ export default function AdminPortal() {
                     {
                       icon: Package,      label: 'App Distribution',      desc: 'PWA config · install links · deep links',
                       path: '/admin/distribution', color: '#BC13FE', badge: 'PWA',
+                    },
+                    {
+                      icon: HeartPulse,   label: 'Provider Health',        desc: 'Live latency · uptime · auto-routing status',
+                      path: '/admin/health', color: '#00FF88', badge: 'Phase F',
+                    },
+                    {
+                      icon: ListChecks,   label: 'Queue Monitor',          desc: 'Background jobs · progress · retry controls',
+                      path: '/admin/queue', color: '#00F2FF', badge: 'Phase F',
+                    },
+                    {
+                      icon: Boxes,        label: 'Feature Registry',       desc: 'Central catalog · tools · providers · models',
+                      path: '/admin/registry', color: '#FFD700', badge: 'Phase F',
+                    },
+                    {
+                      icon: Gem,          label: 'Diamond Economy',        desc: 'Atomic ledger · anti-double-spend · admin grants',
+                      path: '/admin/diamonds', color: '#BC13FE', badge: 'Phase F',
                     },
                     {
                       icon: BookOpen,     label: 'Creator Leaderboard',  desc: 'Top creators by RX points & diamonds',

@@ -61,6 +61,10 @@ import AdminAnalytics from '@/pages/admin/AdminAnalytics';
 import AdminBudgets from '@/pages/admin/AdminBudgets';
 import AdminFraud from '@/pages/admin/AdminFraud';
 import AdminAppDistribution from '@/pages/admin/AdminAppDistribution';
+import AdminProviderHealth from '@/pages/admin/AdminProviderHealth';
+import AdminQueueMonitor from '@/pages/admin/AdminQueueMonitor';
+import AdminFeatureRegistry from '@/pages/admin/AdminFeatureRegistry';
+import AdminDiamondEconomy from '@/pages/admin/AdminDiamondEconomy';
 
 export interface RouteConfig {
   name: string;
@@ -138,6 +142,10 @@ const routes: RouteConfig[] = [
   { name: 'Admin Budgets', path: '/admin/budgets', element: <AdminBudgets />, public: true },
   { name: 'Admin Fraud Protection', path: '/admin/fraud', element: <AdminFraud />, public: true },
   { name: 'Admin App Distribution', path: '/admin/distribution', element: <AdminAppDistribution />, public: true },
+  { name: 'Admin Provider Health', path: '/admin/health', element: <AdminProviderHealth />, public: true },
+  { name: 'Admin Queue Monitor', path: '/admin/queue', element: <AdminQueueMonitor />, public: true },
+  { name: 'Admin Feature Registry', path: '/admin/registry', element: <AdminFeatureRegistry />, public: true },
+  { name: 'Admin Diamond Economy', path: '/admin/diamonds', element: <AdminDiamondEconomy />, public: true },
 
   // ── Phase 3 Admin ──────────────────────────────────────────────────────────
   { name: 'RX Kernel Control Center', path: '/rx-kernel', element: <RxKernelPage />, public: true },

@@ -11,7 +11,7 @@ import {
   Bell, DollarSign, Settings2, Lock, Receipt, Power,
   Tag, Cpu, RefreshCw, ChevronRight, CheckCircle2, XCircle,
   TrendingUp, Globe, Flame, Eye, Database, LayoutDashboard,
-  MessageSquare, FlaskConical, Bug
+  MessageSquare, FlaskConical, Bug, HeartPulse, ListChecks, Boxes, Gem
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -53,6 +53,10 @@ const NAV_CARDS = [
   { icon: Bug,        label: 'Fraud',            path: '/admin/fraud',      color: '#FF4444', badge: 'Security' },
   { icon: Lock,       label: 'Lockdown',         path: '/admin/lockdown',   color: '#f87171', badge: 'Critical' },
   { icon: Database,   label: 'KYC Review',       path: '/admin/kyc',        color: '#BC13FE', badge: 'Identity' },
+  { icon: HeartPulse, label: 'Provider Health',  path: '/admin/health',     color: '#00FF88', badge: 'Phase F' },
+  { icon: ListChecks, label: 'Queue Monitor',    path: '/admin/queue',      color: '#00F2FF', badge: 'Phase F' },
+  { icon: Boxes,      label: 'Feature Registry', path: '/admin/registry',   color: '#FFD700', badge: 'Phase F' },
+  { icon: Gem,        label: 'Diamond Economy',  path: '/admin/diamonds',   color: '#BC13FE', badge: 'Phase F' },
 ];
 
 const MODULES: ModuleStatus[] = [
