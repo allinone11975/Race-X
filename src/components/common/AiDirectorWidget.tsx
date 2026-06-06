@@ -4,18 +4,21 @@ import { MessageSquare, Minimize2, X, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useRxStore } from '@/store/rxStore';
+import { useRxStore, isAdminRole } from '@/store/rxStore';
 import { aiChat } from '@/services/aiGateway';
 import { toast } from 'sonner';
 
 interface Msg { role: 'user' | 'assistant'; content: string; }
 
 export default function AiDirectorWidget() {
-  const { aiDirectorOpen, setAiDirectorOpen } = useRxStore();
+  const { aiDirectorOpen, setAiDirectorOpen, user } = useRxStore();
   const [minimized, setMinimized] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Director widget is admin-only — hide from standard users
+  if (!isAdminRole(user?.role)) return null;
 
   const send = async () => {
     if (!input.trim() || loading) return;

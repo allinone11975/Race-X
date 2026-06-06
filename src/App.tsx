@@ -1,14 +1,13 @@
-import React, { useEffect, useState, lazy, Suspense } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import IntersectObserver from '@/components/common/IntersectObserver';
 import { Toaster } from '@/components/ui/sonner';
 import { supabase } from '@/db/supabase';
-import { useRxStore } from '@/store/rxStore';
+import { useRxStore, type UserRole } from '@/store/rxStore';
 import FestivalOverlay from '@/components/common/FestivalOverlay';
-import AiDirectorWidget from '@/components/common/AiDirectorWidget';
-import FloatingOmniverseButton from '@/components/common/FloatingOmniverseButton';
 
+import AiDirectorWidget from '@/components/common/AiDirectorWidget';
 import routes from './routes';
 
 const queryClient = new QueryClient({
@@ -19,7 +18,7 @@ const queryClient = new QueryClient({
 
 const App: React.FC = () => {
   const [bgColor, setBgColor] = useState('#0A0A0F');
-  const { festivalTheme, isLockdownMode } = useRxStore();
+  const { festivalTheme, isLockdownMode, setUser } = useRxStore();
 
   useEffect(() => {
     fetchConfig();
@@ -27,6 +26,57 @@ const App: React.FC = () => {
     window.addEventListener('app-config-changed', handleConfigChange);
     return () => window.removeEventListener('app-config-changed', handleConfigChange);
   }, []);
+
+  // Persistent session restore — runs once on mount
+  useEffect(() => {
+    let cancelled = false;
+
+    const restoreSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user && !cancelled) {
+        await syncUserToStore(session.user.id);
+      }
+    };
+
+    restoreSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_OUT' || !session?.user) {
+        setUser(null);
+        return;
+      }
+      if (session?.user) {
+        await syncUserToStore(session.user.id);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+      subscription.unsubscribe();
+    };
+  }, [setUser]);
+
+  const syncUserToStore = async (authUserId: string) => {
+    const { data } = await supabase
+      .from('users')
+      .select('id, phone_number, username, avatar_url, diamonds, rx_points, user_level, is_admin, role')
+      .eq('id', authUserId)
+      .maybeSingle();
+
+    if (data) {
+      setUser({
+        id: data.id,
+        phone_number: data.phone_number ?? '',
+        username: data.username ?? '',
+        avatar_url: data.avatar_url ?? null,
+        diamonds: data.diamonds ?? 0,
+        rx_points: data.rx_points ?? 0,
+        level: data.user_level ?? 1,
+        is_admin: data.is_admin ?? false,
+        role: (data.role ?? 'user') as UserRole,
+      });
+    }
+  };
 
   const fetchConfig = async () => {
     const { data, error } = await supabase
@@ -68,8 +118,9 @@ const App: React.FC = () => {
             </Routes>
           </main>
         </div>
+
+
         <AiDirectorWidget />
-        <FloatingOmniverseButton />
         <Toaster position="top-center" expand={true} richColors closeButton />
       </Router>
     </QueryClientProvider>

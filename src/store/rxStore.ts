@@ -5,6 +5,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+export type UserRole = 'user' | 'moderator' | 'admin' | 'super_admin';
+
 export interface RxUser {
   id: string;
   phone_number: string;
@@ -14,6 +16,15 @@ export interface RxUser {
   rx_points: number;
   level: number;
   is_admin: boolean;
+  role: UserRole;
+}
+
+export function isAdminRole(role?: UserRole | null): boolean {
+  return role === 'admin' || role === 'super_admin';
+}
+
+export function isSuperAdmin(role?: UserRole | null): boolean {
+  return role === 'super_admin';
 }
 
 export type FestivalTheme = 'default' | 'diwali' | 'christmas' | 'eid' | 'newyear' | 'halloween';

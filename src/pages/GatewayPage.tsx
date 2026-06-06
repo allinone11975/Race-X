@@ -1,9 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Info, Diamond, Wallet, ShoppingCart, Cloud, ShieldCheck, Clapperboard, Music, Users, MessageSquare, Globe, Trophy, Lock, BarChart3, Cpu, Flag, Shield, Gamepad2, Sparkles } from 'lucide-react';
+import {
+  Info, Diamond, Wallet, ShoppingCart, Cloud, ShieldCheck,
+  Clapperboard, Music, Users, MessageSquare, Globe, Trophy,
+  Lock, BarChart3, Cpu, Flag, Shield, Gamepad2, Sparkles,
+  Compass, Zap
+} from 'lucide-react';
 import { motion } from 'motion/react';
-import { useRxStore } from '@/store/rxStore';
+import { useRxStore, isAdminRole } from '@/store/rxStore';
 
 interface HubSection {
   label: string;
@@ -14,12 +19,14 @@ interface HubSection {
 }
 
 const MAIN_HUBS: HubSection[] = [
-  { label: 'RX Studio', path: '/rx-studio', icon: Clapperboard, color: '#00F2FF', desc: 'AI filmmaking tools' },
-  { label: 'RX Social', path: '/rx-social', icon: Users, color: '#BC13FE', desc: 'Feed, reels, creators' },
-  { label: 'RX Magic Chat', path: '/rx-magic-chat', icon: MessageSquare, color: '#00F2FF', desc: 'Groq AI director' },
-  { label: 'RX Music', path: '/rx-music', icon: Music, color: '#BC13FE', desc: 'Beat & compose' },
-  { label: 'RX Shopping', path: '/rx-shopping', icon: ShoppingCart, color: '#00FF88', desc: 'AI-curated shop' },
-  { label: 'Marketplace', path: '/marketplace', icon: Globe, color: '#FFD700', desc: 'Buy/sell assets' },
+  { label: 'RX Studio',     path: '/rx-studio',       icon: Clapperboard, color: '#00F2FF', desc: 'AI filmmaking tools' },
+  { label: 'RX Social',     path: '/rx-social',        icon: Users,        color: '#BC13FE', desc: 'Feed, reels, creators' },
+  { label: 'RX Magic Chat', path: '/rx-magic-chat',    icon: MessageSquare,color: '#00F2FF', desc: 'Groq AI director' },
+  { label: 'RX Music',      path: '/rx-music',         icon: Music,        color: '#BC13FE', desc: 'Beat & compose' },
+  { label: 'RX Shopping',   path: '/rx-shopping',      icon: ShoppingCart, color: '#00FF88', desc: 'AI-curated shop' },
+  { label: 'Marketplace',   path: '/marketplace',      icon: Globe,        color: '#FFD700', desc: 'Buy/sell assets' },
+  // Omniverse — primary nav entry for all users
+  { label: 'Omniverse',     path: '/gateway',          icon: Compass,      color: '#BC13FE', desc: 'Platform navigator' },
 ];
 
 const FEATURE_LINKS: HubSection[] = [
@@ -47,6 +54,7 @@ const ADMIN_LINKS: HubSection[] = [
 export default function GatewayPage() {
   const navigate = useNavigate();
   const { user, unreadNotifications } = useRxStore();
+  const userIsAdmin = isAdminRole(user?.role);
 
   const renderSection = (title: string, items: HubSection[], delay = 0) => (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }}
@@ -114,13 +122,52 @@ export default function GatewayPage() {
               Welcome back, <span className="text-[#00F2FF] font-medium">@{user.username}</span>
               {' · '}
               <span className="text-[#FFD700]">💎 {user.diamonds.toLocaleString()}</span>
+              {userIsAdmin && (
+                <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#FF4444]/10 border border-[#FF4444]/30 text-[#FF4444] text-[10px] font-bold uppercase tracking-wider">
+                  <Shield className="w-2.5 h-2.5" />
+                  {user.role === 'super_admin' ? 'Super Admin' : 'Admin'}
+                </span>
+              )}
             </p>
           )}
         </motion.div>
 
         {renderSection('Main Platforms', MAIN_HUBS, 0.1)}
         {renderSection('Creator Tools', FEATURE_LINKS, 0.3)}
-        {user?.is_admin && renderSection('Admin God Mode', ADMIN_LINKS, 0.5)}
+
+        {/* Admin section — only visible to admin/super_admin roles */}
+        {userIsAdmin && renderSection('Admin Controls', ADMIN_LINKS, 0.5)}
+
+        {/* Admin quick-launch strip — Omniverse + Director for admins */}
+        {userIsAdmin && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.65 }}
+            className="mb-6 flex gap-3"
+          >
+            <button
+              onClick={() => navigate('/admin/omniverse')}
+              className="flex-1 flex items-center gap-3 px-4 py-3 rounded-2xl border border-[#BC13FE]/30 bg-[#BC13FE]/5 hover:border-[#BC13FE]/60 hover:bg-[#BC13FE]/10 transition-all text-left"
+            >
+              <Compass className="w-5 h-5 shrink-0 text-[#BC13FE]" />
+              <div className="min-w-0">
+                <p className="text-sm font-bold text-white text-balance">Omniverse Dashboard</p>
+                <p className="text-[10px] text-muted-foreground text-pretty">Platform command center</p>
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/rx-magic-chat')}
+              className="flex-1 flex items-center gap-3 px-4 py-3 rounded-2xl border border-[#00F2FF]/30 bg-[#00F2FF]/5 hover:border-[#00F2FF]/60 hover:bg-[#00F2FF]/10 transition-all text-left"
+            >
+              <Zap className="w-5 h-5 shrink-0 text-[#00F2FF]" />
+              <div className="min-w-0">
+                <p className="text-sm font-bold text-white text-balance">AI Director</p>
+                <p className="text-[10px] text-muted-foreground text-pretty">Cinematic AI assistant</p>
+              </div>
+            </button>
+          </motion.div>
+        )}
 
         {/* Footer */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}
