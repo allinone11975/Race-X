@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { MessageSquare, Minimize2, X, Zap } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence, useDragControls } from 'motion/react';
+import { MessageSquare, Minimize2, X, Zap, GripHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -16,6 +16,8 @@ export default function AiDirectorWidget() {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const constraintsRef = useRef<HTMLDivElement>(null);
+  const dragControls = useDragControls();
 
   const send = async () => {
     if (!input.trim() || loading) return;
@@ -37,31 +39,51 @@ export default function AiDirectorWidget() {
 
   return (
     <>
-      {/* Floating trigger */}
+      {/* Full-screen drag constraint layer */}
+      <div ref={constraintsRef} className="fixed inset-0 z-40 pointer-events-none" />
+
+      {/* Movable floating trigger */}
       {!aiDirectorOpen && (
         <motion.button
+          drag
+          dragConstraints={constraintsRef}
+          dragMomentum={false}
+          dragElastic={0}
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
           onClick={() => setAiDirectorOpen(true)}
-          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#0A0A0F] border border-[#00F2FF]/60 flex items-center justify-center shadow-[0_0_20px_rgba(0,242,255,0.4)] cursor-pointer"
+          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#0A0A0F] border border-[#00F2FF]/60 flex items-center justify-center shadow-[0_0_20px_rgba(0,242,255,0.4)] cursor-grab active:cursor-grabbing"
+          style={{ touchAction: 'none' }}
         >
           <Zap className="w-6 h-6 text-[#00F2FF]" />
         </motion.button>
       )}
 
-      {/* Widget panel */}
+      {/* Movable widget panel */}
       <AnimatePresence>
         {aiDirectorOpen && (
           <motion.div
+            drag
+            dragControls={dragControls}
+            dragListener={false}
+            dragConstraints={constraintsRef}
+            dragMomentum={false}
+            dragElastic={0}
             initial={{ opacity: 0, scale: 0.8, y: 40 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 40 }}
             className="fixed bottom-6 right-6 z-50 w-80 rounded-xl border border-[#00F2FF]/30 bg-[#0A0A0F]/95 backdrop-blur-xl shadow-[0_0_40px_rgba(0,242,255,0.2)] overflow-hidden"
+            style={{ touchAction: 'none' }}
           >
-            {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-[#00F2FF]/20">
+            {/* Draggable Header */}
+            <div
+              onPointerDown={(e) => dragControls.start(e)}
+              className="flex items-center justify-between px-4 py-3 border-b border-[#00F2FF]/20 cursor-grab active:cursor-grabbing select-none"
+            >
               <div className="flex items-center gap-2">
+                <GripHorizontal className="w-3.5 h-3.5 text-white/20" />
                 <Zap className="w-4 h-4 text-[#00F2FF]" />
                 <span className="text-sm font-bold text-[#00F2FF] tracking-wider">AI DIRECTOR</span>
                 <span className="text-[10px] text-muted-foreground">Groq · LLaMA 3.3</span>

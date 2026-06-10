@@ -1,6 +1,6 @@
 /**
  * AdminAuthGuard — Password-protected wrapper for admin routes
- * Simple PIN gate stored in session, no server dependency
+ * Master phone (8011692945) bypasses PIN entirely
  */
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -10,16 +10,18 @@ import { Input } from '@/components/ui/input';
 import { useRxStore } from '@/store/rxStore';
 
 const ADMIN_PIN_KEY = 'rx_admin_pin_verified';
-const ADMIN_PIN_HASH = 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3'; // SHA256 of "1234" — change in production
+const MASTER_ADMIN_PHONE = '8011692945';
 
-function sha256(str: string): string {
-  // Simple client-side hash (not cryptographically secure, sufficient for UI guard)
+function simpleHash(str: string): string {
   let h = 0;
   for (let i = 0; i < str.length; i++) {
     h = ((h << 5) - h + str.charCodeAt(i)) | 0;
   }
   return Math.abs(h).toString(16).padStart(8, '0');
 }
+
+// PIN "1234" hash
+const ADMIN_PIN_HASH = simpleHash('1234');
 
 interface AdminAuthGuardProps {
   children: React.ReactNode;
@@ -34,14 +36,20 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
   const { user } = useRxStore();
 
   useEffect(() => {
+    // Master admin phone bypasses PIN entirely
+    if (user?.phone_number === MASTER_ADMIN_PHONE || user?.is_admin) {
+      sessionStorage.setItem(ADMIN_PIN_KEY, 'true');
+      setAuthenticated(true);
+      return;
+    }
     const verified = sessionStorage.getItem(ADMIN_PIN_KEY);
     if (verified === 'true') setAuthenticated(true);
-  }, []);
+  }, [user]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    if (sha256(pin) === ADMIN_PIN_HASH) {
+    if (simpleHash(pin) === ADMIN_PIN_HASH) {
       sessionStorage.setItem(ADMIN_PIN_KEY, 'true');
       setAuthenticated(true);
     } else {
@@ -122,7 +130,7 @@ export default function AdminAuthGuard({ children }: AdminAuthGuardProps) {
           </Button>
 
           <p className="text-[10px] text-center text-white/20">
-            Default code: 1234 &middot; Change in production
+            Default code: 1234 &middot; Master admin: auto-unlock
           </p>
         </motion.form>
       </motion.div>

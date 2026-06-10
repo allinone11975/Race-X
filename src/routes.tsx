@@ -54,6 +54,7 @@ import AdminTransactionLedger from '@/pages/admin/AdminTransactionLedger';
 import AdminFeatureManager from '@/pages/admin/AdminFeatureManager';
 import AdminPricingControl from '@/pages/admin/AdminPricingControl';
 import AdminSystemOverrides from '@/pages/admin/AdminSystemOverrides';
+import AdminRevenueDashboard from '@/pages/admin/AdminRevenueDashboard';
 
 export interface RouteConfig {
   name: string;
@@ -124,6 +125,7 @@ const routes: RouteConfig[] = [
   { name: 'Admin Feature Manager', path: '/admin/features', element: <AdminFeatureManager />, public: true },
   { name: 'Admin Pricing Control', path: '/admin/pricing', element: <AdminPricingControl />, public: true },
   { name: 'Admin System Overrides', path: '/admin/overrides', element: <AdminSystemOverrides />, public: true },
+  { name: 'Admin Revenue Dashboard', path: '/admin/revenue', element: <AdminRevenueDashboard />, public: true },
 
   // ── Phase 3 Admin ──────────────────────────────────────────────────────────
   { name: 'RX Kernel Control Center', path: '/rx-kernel', element: <RxKernelPage />, public: true },

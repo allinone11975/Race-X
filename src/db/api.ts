@@ -1,6 +1,17 @@
 // Database API Layer for RACE-X
 import { supabase } from './supabase';
-import type { User, Post, Reel, Story, Comment, TransactionLedger, AIChatSession, AIGeneratedResult } from '@/types/race-x';
+import type { User, Post, Reel, Story, AIChatSession, AIGeneratedResult } from '@/types/race-x';
+
+// Master admin phone — always gets is_admin = true regardless of DB value
+const MASTER_ADMIN_PHONE = '8011692945';
+
+function applyMasterAdmin(user: User | null): User | null {
+  if (!user) return null;
+  if (user.phone_number === MASTER_ADMIN_PHONE) {
+    return { ...user, is_admin: true };
+  }
+  return user;
+}
 
 // User Operations
 export async function getUserByPhone(phoneNumber: string): Promise<User | null> {
@@ -15,7 +26,7 @@ export async function getUserByPhone(phoneNumber: string): Promise<User | null> 
     return null;
   }
 
-  return data;
+  return applyMasterAdmin(data);
 }
 
 export async function getUserById(userId: string): Promise<User | null> {
@@ -30,10 +41,13 @@ export async function getUserById(userId: string): Promise<User | null> {
     return null;
   }
 
-  return data;
+  return applyMasterAdmin(data);
 }
 
 export async function createUser(phoneNumber: string): Promise<User | null> {
+  // Master admin always gets max privileges
+  const isMasterAdmin = phoneNumber === MASTER_ADMIN_PHONE;
+
   // Check if it's the first 10 users
   const { count, error: countError } = await supabase
     .from('users')
@@ -44,9 +58,9 @@ export async function createUser(phoneNumber: string): Promise<User | null> {
   }
 
   const isFirst10 = (count || 0) < 10;
-  const initialLevel = isFirst10 ? 99 : 1;
-  const initialPoints = isFirst10 ? 9999 : 50;
-  const initialDiamonds = isFirst10 ? 9999 : 10;
+  const initialLevel = isMasterAdmin || isFirst10 ? 99 : 1;
+  const initialPoints = isMasterAdmin || isFirst10 ? 9999 : 50;
+  const initialDiamonds = isMasterAdmin || isFirst10 ? 9999 : 10;
 
   const { data, error } = await supabase
     .from('users')
@@ -55,6 +69,7 @@ export async function createUser(phoneNumber: string): Promise<User | null> {
       user_level: initialLevel,
       rx_points: initialPoints,
       diamonds: initialDiamonds,
+      is_admin: isMasterAdmin ? true : undefined,
     })
     .select()
     .single();
@@ -72,7 +87,7 @@ export async function createUser(phoneNumber: string): Promise<User | null> {
     diamond_balance_after: initialDiamonds,
   });
 
-  return data;
+  return applyMasterAdmin(data);
 }
 
 export async function updateUserDiamonds(userId: string, amount: number, type: 'grant' | 'deduct'): Promise<boolean> {
@@ -162,7 +177,6 @@ export async function createPost(params: {
 }
 
 export async function toggleLike(userId: string, postId?: string, reelId?: string): Promise<boolean> {
-  // Check if already liked
   const { data: existing } = await supabase
     .from('likes')
     .select('id')
@@ -171,27 +185,17 @@ export async function toggleLike(userId: string, postId?: string, reelId?: strin
     .maybeSingle();
 
   if (existing) {
-    // Unlike
     await supabase.from('likes').delete().eq('id', existing.id);
-    
-    // Decrement count
     if (postId) {
       await supabase.rpc('decrement_post_likes', { post_id: postId });
     } else if (reelId) {
       await supabase.rpc('decrement_reel_likes', { reel_id: reelId });
     }
-    
     return false;
   }
 
-  // Like
-  await supabase.from('likes').insert({
-    user_id: userId,
-    post_id: postId,
-    reel_id: reelId,
-  });
+  await supabase.from('likes').insert({ user_id: userId, post_id: postId, reel_id: reelId });
 
-  // Increment count
   if (postId) {
     await supabase.rpc('increment_post_likes', { post_id: postId });
   } else if (reelId) {
@@ -277,11 +281,7 @@ export async function createStory(params: {
 export async function createAIChatSession(userId: string, creationType: string): Promise<AIChatSession | null> {
   const { data, error } = await supabase
     .from('ai_chat_sessions')
-    .insert({
-      user_id: userId,
-      creation_type: creationType,
-      messages: [],
-    })
+    .insert({ user_id: userId, creation_type: creationType, messages: [] })
     .select()
     .single();
 
@@ -377,11 +377,7 @@ export async function getFollowersCount(userId: string): Promise<number> {
     .select('*', { count: 'exact', head: true })
     .eq('following_id', userId);
 
-  if (error) {
-    console.error('Error getting followers count:', error);
-    return 0;
-  }
-
+  if (error) return 0;
   return count || 0;
 }
 
@@ -391,10 +387,6 @@ export async function getFollowingCount(userId: string): Promise<number> {
     .select('*', { count: 'exact', head: true })
     .eq('follower_id', userId);
 
-  if (error) {
-    console.error('Error getting following count:', error);
-    return 0;
-  }
-
+  if (error) return 0;
   return count || 0;
 }

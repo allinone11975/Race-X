@@ -7,8 +7,6 @@ import { supabase } from '@/db/supabase';
 import { useRxStore } from '@/store/rxStore';
 import FestivalOverlay from '@/components/common/FestivalOverlay';
 import AiDirectorWidget from '@/components/common/AiDirectorWidget';
-import FloatingOmniverseButton from '@/components/common/FloatingOmniverseButton';
-
 import routes from './routes';
 
 const queryClient = new QueryClient({
@@ -69,7 +67,6 @@ const App: React.FC = () => {
           </main>
         </div>
         <AiDirectorWidget />
-        <FloatingOmniverseButton />
         <Toaster position="top-center" expand={true} richColors closeButton />
       </Router>
     </QueryClientProvider>

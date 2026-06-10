@@ -1,6 +1,6 @@
 /**
  * RACE-X Omniverse — Global Zustand Store
- * Single source of truth for user, UI, audio, theme state
+ * Single source of truth for user, UI, audio, theme, API keys state
  */
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -17,6 +17,14 @@ export interface RxUser {
 }
 
 export type FestivalTheme = 'default' | 'diwali' | 'christmas' | 'eid' | 'newyear' | 'halloween';
+
+export interface ApiKeys {
+  groq: string;
+  openRouter: string;
+  googleAI: string;
+  cloudinaryCloud: string;
+  cloudinaryPreset: string;
+}
 
 interface RxStore {
   // User
@@ -50,6 +58,10 @@ interface RxStore {
   // Omniverse UI preference
   omniverseView: 'floating' | 'card';
   setOmniverseView: (v: 'floating' | 'card') => void;
+
+  // API Keys (stored locally, never sent to server)
+  apiKeys: ApiKeys;
+  setApiKey: (provider: keyof ApiKeys, value: string) => void;
 }
 
 export const useRxStore = create<RxStore>()(
@@ -83,6 +95,16 @@ export const useRxStore = create<RxStore>()(
 
       omniverseView: 'floating',
       setOmniverseView: (v) => set({ omniverseView: v }),
+
+      apiKeys: {
+        groq: '',
+        openRouter: '',
+        googleAI: '',
+        cloudinaryCloud: '',
+        cloudinaryPreset: '',
+      },
+      setApiKey: (provider, value) =>
+        set((s) => ({ apiKeys: { ...s.apiKeys, [provider]: value } })),
     }),
     {
       name: 'race-x-store',
@@ -91,6 +113,7 @@ export const useRxStore = create<RxStore>()(
         festivalTheme: s.festivalTheme,
         ambientAudioEnabled: s.ambientAudioEnabled,
         omniverseView: s.omniverseView,
+        apiKeys: s.apiKeys,
       }),
     }
   )
