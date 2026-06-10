@@ -5,8 +5,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
-  Zap, Music, Radio, Image, Video, Wand2, Shield,
-  X, Compass, Cpu, ChevronUp, Settings, LayoutDashboard
+  Music, Radio, Image, Video, Wand2, Shield,
+  X, Compass
 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useRxStore } from '@/store/rxStore';

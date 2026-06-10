@@ -6,12 +6,11 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Music, Radio, Image, Video, Wand2, Shield, Zap,
-  Activity, TrendingUp, Users, Diamond, ChevronRight
+  Music, Radio, Image, Video, Wand2, Zap,
+  Activity, Users, Diamond, ChevronRight
 } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/db/supabase';
 import { useRxStore } from '@/store/rxStore';
 
