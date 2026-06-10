@@ -20,11 +20,11 @@ interface QuickAction {
 }
 
 const ACTIONS: QuickAction[] = [
-  { icon: <Music className="w-5 h-5" />, label: 'Studio', path: '/music', color: '#BC13FE', bg: 'bg-[#BC13FE]/15' },
-  { icon: <Radio className="w-5 h-5" />, label: 'Radio', path: '/radio', color: '#00F2FF', bg: 'bg-[#00F2FF]/15' },
-  { icon: <Image className="w-5 h-5" />, label: 'AI Images', path: '/ai-tools', color: '#00FF88', bg: 'bg-[#00FF88]/15' },
-  { icon: <Video className="w-5 h-5" />, label: 'AI Video', path: '/ai-video', color: '#FF6B35', bg: 'bg-[#FF6B35]/15' },
-  { icon: <Wand2 className="w-5 h-5" />, label: 'Social', path: '/social', color: '#E91E63', bg: 'bg-[#E91E63]/15' },
+  { icon: <Music className="w-5 h-5" />, label: 'Studio', path: '/rx-studio', color: '#BC13FE', bg: 'bg-[#BC13FE]/15' },
+  { icon: <Radio className="w-5 h-5" />, label: 'Music', path: '/rx-music', color: '#00F2FF', bg: 'bg-[#00F2FF]/15' },
+  { icon: <Image className="w-5 h-5" />, label: 'AI Images', path: '/rx-studio/cgi', color: '#00FF88', bg: 'bg-[#00FF88]/15' },
+  { icon: <Video className="w-5 h-5" />, label: 'AI Video', path: '/rx-studio/vfx', color: '#FF6B35', bg: 'bg-[#FF6B35]/15' },
+  { icon: <Wand2 className="w-5 h-5" />, label: 'Social', path: '/rx-social', color: '#E91E63', bg: 'bg-[#E91E63]/15' },
   { icon: <Shield className="w-5 h-5" />, label: 'Admin', path: '/admin', color: '#FFD700', bg: 'bg-[#FFD700]/15' },
 ];
 
