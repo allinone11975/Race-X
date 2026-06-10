@@ -115,10 +115,12 @@ export async function deductDiamondsForTool(
   });
 
   // Update tools_config usage stats
-  await supabase.from('tools_config').upsert({
-    tool_name: toolName,
-    config_data: { last_used_by: userId, last_used_at: new Date().toISOString() },
-  }, { onConflict: 'tool_name' }).catch(() => {});
+  try {
+    await supabase.from('tools_config').upsert({
+      tool_name: toolName,
+      config_data: { last_used_by: userId, last_used_at: new Date().toISOString() },
+    }, { onConflict: 'tool_name' });
+  } catch { /* optional stat update */ }
 
   return { success: true, newBalance, amountDeducted: cost };
 }
@@ -165,21 +167,23 @@ export async function createMedia(params: CreateMediaParams): Promise<{
   }
 
   // 4. Save to ai_generated_results
-  await supabase.from('ai_generated_results').insert({
-    user_id: userId,
-    session_id: `${toolName}-${Date.now()}`,
-    result_type: mediaType,
-    result_url: cloudinaryResult?.secure_url ?? mediaUrl,
-    is_saved: true,
-    is_published: false,
-    metadata: {
-      tool: toolName,
-      prompt: prompt.slice(0, 200),
-      cloudinary_public_id: cloudinaryResult?.public_id,
-      watermarked: cloudinaryResult?.watermarked ?? false,
-      ...metadata,
-    },
-  }).catch(() => {});
+  try {
+    await supabase.from('ai_generated_results').insert({
+      user_id: userId,
+      session_id: `${toolName}-${Date.now()}`,
+      result_type: mediaType,
+      result_url: cloudinaryResult?.secure_url ?? mediaUrl,
+      is_saved: true,
+      is_published: false,
+      metadata: {
+        tool: toolName,
+        prompt: prompt.slice(0, 200),
+        cloudinary_public_id: cloudinaryResult?.public_id,
+        watermarked: cloudinaryResult?.watermarked ?? false,
+        ...metadata,
+      },
+    });
+  } catch { /* optional result logging */ }
 
   return {
     success: true,
@@ -207,6 +211,8 @@ export async function seedToolsConfig(): Promise<void> {
   ];
 
   for (const tool of defaults) {
-    await supabase.from('tools_config').upsert(tool, { onConflict: 'tool_name' }).catch(() => {});
+    try {
+      await supabase.from('tools_config').upsert(tool, { onConflict: 'tool_name' });
+    } catch { /* seed is optional */ }
   }
 }

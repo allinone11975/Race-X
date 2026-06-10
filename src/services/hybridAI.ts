@@ -45,7 +45,6 @@ export interface HybridResult {
 // ─── Routing rules ────────────────────────────────────────────────────────────
 
 const BROWSER_TASKS: TaskType[] = ['text-classification', 'intent-routing', 'lyrics', 'script', 'image-preview'];
-const EXTERNAL_TASKS: TaskType[] = ['image-hifi', 'audio-mp3', 'video-mp4'];
 
 const DIAMOND_COSTS: Record<TaskType, number> = {
   'text-classification': 0,
@@ -98,7 +97,8 @@ async function checkAndDeductDiamonds(userId: string, cost: number): Promise<boo
 async function runBrowserAI(task: HybridTask): Promise<string> {
   try {
     // Dynamic import — Transformers.js is large, only load when needed
-    const { pipeline } = await import('@xenova/transformers');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { pipeline } = await import(/* @vite-ignore */ '@xenova/transformers') as any;
 
     if (task.type === 'text-classification' || task.type === 'intent-routing') {
       const classifier = await pipeline(
