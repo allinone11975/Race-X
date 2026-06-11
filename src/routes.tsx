@@ -55,6 +55,8 @@ import AdminFeatureManager from '@/pages/admin/AdminFeatureManager';
 import AdminPricingControl from '@/pages/admin/AdminPricingControl';
 import AdminSystemOverrides from '@/pages/admin/AdminSystemOverrides';
 import AdminRevenueDashboard from '@/pages/admin/AdminRevenueDashboard';
+import RxCapCutEditor from '@/pages/RxCapCutEditor';
+import RxLayerEditor from '@/pages/RxLayerEditor';
 
 export interface RouteConfig {
   name: string;
@@ -73,6 +75,8 @@ const routes: RouteConfig[] = [
   // ── Rx Studio ──────────────────────────────────────────────────────────────
   { name: 'Rx Studio Home', path: '/rx-studio', element: <RxStudioHome />, public: true },
   { name: 'Rx Studio Editor', path: '/rx-studio/editor', element: <RxStudioEditor />, public: true },
+  { name: 'RX CapCut Editor', path: '/rx-studio/capcut', element: <RxCapCutEditor />, public: true },
+  { name: 'RX Layer Editor', path: '/rx-studio/layer-editor', element: <RxLayerEditor />, public: true },
   { name: 'Rx Studio Tools Hub', path: '/rx-studio/tools', element: <RxStudioTools />, public: true },
   { name: 'AI Creation', path: '/rx-studio/create/:type', element: <AICreationPage />, public: true },
   // Studio tools
