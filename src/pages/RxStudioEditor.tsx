@@ -93,8 +93,17 @@ export default function RxStudioEditor() {
               <ArrowLeft className="w-6 h-6" />
             </Button>
             <h1 className="text-2xl font-bold gradient-text">Rx Studio Editor</h1>
-            <div className="ml-auto text-sm text-muted-foreground">
-              Level: {user.user_level} | Diamonds: {user.diamonds}
+            <div className="ml-auto flex items-center gap-3">
+              <span className="text-sm text-muted-foreground">
+                Level: {user.user_level} | Diamonds: {user.diamonds}
+              </span>
+              <Button
+                size="sm"
+                className="bg-gradient-to-r from-[#4F46E5] via-[#059669] to-[#D97706] text-white font-bold text-xs px-4 rounded-full hover:brightness-110"
+                onClick={() => navigate('/rx-studio/layer-editor')}
+              >
+                🎬 Layer Editor
+              </Button>
             </div>
           </div>
 
